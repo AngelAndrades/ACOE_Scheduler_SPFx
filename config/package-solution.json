@@ -3,7 +3,7 @@
   "solution": {
     "name": "ACOE Scheduler",
     "id": "70b4fa1a-ff37-49e1-9d68-b7068e43abde",
-    "version": "1.2.0.0",
+    "version": "1.2.1.0",
     "includeClientSideAssets": true,
     "isDomainIsolated": false,
     "developer": {
