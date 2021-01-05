@@ -30,7 +30,7 @@ export class SPA {
             let [year, month, date] = (isoString).split('T')[0].split('-').map(Number);
             let [hour, minute, second] = (isoString).split('T')[1].split(':').map(Number);
 
-            return new Date (year, month, date, hour, minute);
+            return new Date (year, month-1, date, hour, minute);
         };
 
         // convert Outlook recurrence to iCal rules
@@ -168,7 +168,8 @@ export class SPA {
                     }
                 });
 
-                await sp.web.lists.getByTitle(site.Title).items.select('Id','Title','Location','EventDate','EndDate','Description','fAllDayEvent','fRecurrence','Category','RecurrenceData').top(1000).filter("EndDate ge datetime'" + currentDate.toISOString() + "'").getPaged()
+                //await sp.web.lists.getByTitle(site.Title).items.select('Id','Title','Location','EventDate','EndDate','Description','fAllDayEvent','fRecurrence','Category','RecurrenceData').top(1000).filter("EndDate ge datetime'" + currentDate.toISOString() + "'").getPaged()
+                await sp.web.lists.getByTitle(site.Title).items.select('Id','Title','Location','EventDate','EndDate','Description','fAllDayEvent','fRecurrence','Category','RecurrenceData').top(1000).getPaged()
                 .then(response => { 
                     response.results.map(item => {
                         item.teamId = teamId;
@@ -232,10 +233,10 @@ export class SPA {
                 });
 
                 // Remove duplicate entries from the calendar
-                renamedDataArray = renamedDataArray.reduce((acc, curr) => {
+                /*renamedDataArray = renamedDataArray.reduce((acc, curr) => {
                     if (acc.some(x => x.title === curr.title && x.start === curr.start)) return acc;
                     else return [...acc, curr];
-                },new Array());
+                },new Array());*/
                 
                 let ds = new kendo.data.SchedulerDataSource({
                     data: renamedDataArray,
